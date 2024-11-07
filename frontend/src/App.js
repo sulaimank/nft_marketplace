@@ -10,7 +10,7 @@ function App() {
         <NFTListings />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Welcome to the NFT Marketplace Project by Sulaiman!
+          Welcome to the NFT Marketplace Project by Sulaiman Karmali!
         </p>
         <a
           className="App-link"

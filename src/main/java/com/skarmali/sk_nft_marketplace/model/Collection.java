@@ -12,6 +12,9 @@ public class Collection {
     @Id
     private String id;
     private String name;
+    private String collection;
+    private String category;
+    private String url;
     private String description;
     private String imageUrl;
 }

@@ -42,8 +42,11 @@ const NFTListings = () => {
                     await axios.post('http://localhost:8080/nft_project/collections', {
                         id: collection.id,
                         name: collection.name,
+                        collection: collection.collection,
+                        category: collection.category,
+                        url: collection.opensea_url,
                         description: collection.description,
-                        imageUrl: collection.imageUrl
+                        imageUrl: collection.image_url
                     });
                 }
             } catch (error) {

@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/nft_project")
 @CrossOrigin(origins = "http://localhost:3000")
-public class ClientsController {
+public class NFTController {
     @Autowired
     private final CollectionRepository collectionRepository;
 
     @Autowired
     private final CollectionUrlRepository collectionUrlRepository;
 
-    public ClientsController(CollectionRepository collectionRepository, CollectionUrlRepository collectionUrlRepository) {
+    public NFTController(CollectionRepository collectionRepository, CollectionUrlRepository collectionUrlRepository) {
         this.collectionRepository = collectionRepository;
         this.collectionUrlRepository = collectionUrlRepository;
     }

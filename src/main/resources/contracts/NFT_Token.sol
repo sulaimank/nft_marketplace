@@ -1,3 +1,4 @@
+// solc NFT_Token.sol --bin --abi --optimize --include-path ../../../../node_modules/ --base-path . -o ./output
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.10;
 

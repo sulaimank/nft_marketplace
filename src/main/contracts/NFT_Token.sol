@@ -8,9 +8,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 contract NFT_Token is ERC721URIStorage, Ownable {
     uint256 public tokenCounter;
 
-
-    constructor(string memory name, string memory symbol) ERC721(name, symbol) Ownable() {
-        // Your constructor code here
+    constructor(string memory name, string memory symbol) ERC721(name, symbol) Ownable(msg.sender) {
+        tokenCounter = 0;
     }
 
     function createNFT(string memory tokenURI) public onlyOwner returns (uint256) {
@@ -21,4 +20,3 @@ contract NFT_Token is ERC721URIStorage, Ownable {
         return newItemId;
     }
 }
-

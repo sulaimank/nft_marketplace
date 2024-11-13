@@ -27,7 +27,7 @@ public class NFTService {
     }
 
     public String deployContract() throws Exception {
-//        SimpleNFT contract = SimpleNFT.deploy(
+//        NFT_Token contract = SimpleNFT.deploy(
 //                web3j,
 //                credentials,
 //                gasProvider,

@@ -8,11 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.core.io.ClassPathResource;
+import org.web3j.crypto.Credentials;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.gas.ContractGasProvider;
+import org.web3j.tx.gas.DefaultGasProvider;
 
 @RestController
 @RequestMapping("/nft_project")
@@ -62,5 +71,30 @@ public class NFTController {
         return collectionUrlRepository.findAll().stream()
                                    .map(CollectionUrl::getUrl)
                                    .collect(Collectors.toList());
+    }
+
+    @PostMapping("/deploy")
+    public String deployNFTFromBytecode() throws Exception {
+        // Load bytecode from resources
+        ClassPathResource resource = new ClassPathResource("contracts/NFT_Token.bin");
+        byte[] bytecode;
+        try (InputStream inputStream = resource.getInputStream()) {
+            bytecode = inputStream.readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load bytecode from resources", e);
+        }
+
+        // Connect to Ethereum network (replace with your provider)
+        Web3j web3j = Web3j.build(new HttpService("YOUR_ETHEREUM_PROVIDER_URL"));
+
+        // Load credentials (replace with your private key)
+        Credentials credentials = Credentials.create("YOUR_PRIVATE_KEY");
+
+        // Deploy contract
+        ContractGasProvider gasProvider = new DefaultGasProvider();
+        // Replace NFT_Token with the actual contract name from the ABI
+        NFT_Token contract = NFT_Token.deploy(web3j, credentials, gasProvider, bytecode).send();
+
+        return contract.getContractAddress();
     }
 }

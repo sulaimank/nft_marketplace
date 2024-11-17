@@ -82,9 +82,9 @@ public class NFTController {
         return nftService.deployContract();
     }
 
-    @GetMapping("/balance/{address}")
-    public ResponseEntity<BigInteger> getBalance(@PathVariable String address) throws Exception {
-        BigInteger balance = nftService.getBalance(address);
+    @GetMapping("/balance")
+    public ResponseEntity<BigInteger> getBalance() throws Exception {
+        BigInteger balance = nftService.getBalance();
         return ResponseEntity.ok(balance);
     }
 }

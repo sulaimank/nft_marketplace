@@ -61,7 +61,12 @@ button {
 }
 
 button:hover {
-  background-color: #21a1f1;
+  background-color: #61dafb; /* Remove hover color change */
+}
+
+button:focus {
+  background-color: #61dafb;
+  outline: none;
 }
 
 table {
@@ -84,9 +89,6 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-tr:hover {
-  background-color: #ddd;
-}
 
 .nft-listings-title {
   font-size: 2em;

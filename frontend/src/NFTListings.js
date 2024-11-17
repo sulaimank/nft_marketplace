@@ -77,7 +77,7 @@ const NFTListings = () => {
 
     return (
         <div>
-            <h1>Sulaiman's NFT Listings</h1>
+            <h3 className="nft-listings-title">My NFT Listings</h3>
             <table>
                 <thead>
                 <tr>

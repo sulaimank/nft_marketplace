@@ -8,18 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <NFTListings />
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to the NFT Marketplace Project by Sulaiman Karmali!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          UCF FinTech NFT Marketplace Project
-        </a>
+        <h1>Welcome to the UCF FinTech NFT Marketplace Project by Sulaiman Karmali!</h1>
       </header>
     </div>
   );

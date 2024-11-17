@@ -6,7 +6,7 @@ import com.skarmali.sk_nft_marketplace.repository.CollectionRepository;
 import com.skarmali.sk_nft_marketplace.repository.CollectionUrlRepository;
 import com.skarmali.sk_nft_marketplace.service.NFTService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +30,6 @@ public class NFTController {
     @Autowired
     private NFTService nftService;
 
-
-    @Value("${ethereum.node.url}")
-    private String ethereumNodeUrl;
-
-    @Value("${ethereum.wallet.privateKey}")
-    private String privateKey;
-
     public NFTController(CollectionRepository collectionRepository, CollectionUrlRepository collectionUrlRepository) {
         this.collectionRepository = collectionRepository;
         this.collectionUrlRepository = collectionUrlRepository;
@@ -59,6 +52,26 @@ public class NFTController {
         Optional<Collection> collection = collectionRepository.findById(id);
         return collection.map(ResponseEntity::ok)
                          .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/sell/{id}")
+    public ResponseEntity<String> sellNFT(@PathVariable String id) {
+        try {
+            String transactionHash = nftService.sellNFT(id);
+            return ResponseEntity.ok(transactionHash);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/buy/{id}")
+    public ResponseEntity<String> buyNFT(@PathVariable String id) {
+        try {
+            String transactionHash = nftService.buyNFT(id);
+            return ResponseEntity.ok(transactionHash);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("/collections/name/{name}")

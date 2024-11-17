@@ -63,14 +63,22 @@ const NFTListings = () => {
         }
     };
 
-    const handlePurchase = (nft) => {
-        // Implement purchase logic here
-        console.log(`Purchasing NFT: ${nft.name}`);
+    const handlePurchase = async (nft) => {
+        try {
+            const response = await axios.post(`http://localhost:8080/nft_project/buy/${nft.id}`);
+            console.log(`Purchased NFT: ${nft.name}, Transaction Hash: ${response.data}`);
+        } catch (error) {
+            console.error('Error purchasing NFT:', error);
+        }
     };
 
-    const handleSale = (nft) => {
-        // Implement purchase logic here
-        console.log(`Selling NFT: ${nft.name}`);
+    const handleSale = async (nft) => {
+        try {
+            const response = await axios.post(`http://localhost:8080/nft_project/sell/${nft.id}`);
+            console.log(`Sold NFT: ${nft.name}, Transaction Hash: ${response.data}`);
+        } catch (error) {
+            console.error('Error selling NFT:', error);
+        }
     };
 
 
@@ -110,6 +118,5 @@ const NFTListings = () => {
     );
 
 };
-
 
 export default NFTListings;

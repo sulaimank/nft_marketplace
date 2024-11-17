@@ -75,15 +75,6 @@ public class NFTController {
 
     @PostMapping("/deploy")
     public String deployNFTFromBytecode() throws Exception {
-        // Load bytecode from resources
-        ClassPathResource resource = new ClassPathResource("contracts/NFT_Token.bin");
-        byte[] bytecode;
-        try (InputStream inputStream = resource.getInputStream()) {
-            bytecode = inputStream.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load bytecode from resources", e);
-        }
-
         // Connect to Ethereum test network (replace with your provider)
         Web3j web3j = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/UCF_Project"));
 
@@ -93,7 +84,7 @@ public class NFTController {
 
         // Deploy contract
         ContractGasProvider gasProvider = new DefaultGasProvider();
-        NFT_Token contract = NFT_Token.deploy(web3j, credentials, gasProvider, "Sulaiman NFT Marketplace", "SUCF").send();
+        NFT_Token contract = NFT_Token.deploy(web3j, credentials, gasProvider, "UCF NFT Marketplace", "SUCF").send();
 
         return contract.getContractAddress();
     }

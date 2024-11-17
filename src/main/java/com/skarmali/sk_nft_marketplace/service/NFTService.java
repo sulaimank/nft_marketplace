@@ -1,10 +1,12 @@
 package com.skarmali.sk_nft_marketplace.service;
 
+import com.skarmali.sk_nft_marketplace.contracts.NFT_Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
@@ -27,24 +29,19 @@ public class NFTService {
     }
 
     public String deployContract() throws Exception {
-//        NFT_Token contract = SimpleNFT.deploy(
-//                web3j,
-//                credentials,
-//                gasProvider,
-//                BigInteger.valueOf(1000000) // Initial supply
-//        ).send();
-//        return contract.getContractAddress();
-        return "CONTRACT_ADDRESS"; // Replace with actual deployed address
+        // Check connection
+        Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+        if (web3ClientVersion.hasError()) {
+            throw new RuntimeException("Error connecting to Ethereum network: " + web3ClientVersion.getError().getMessage());
+        }
+
+        // Deploy contract
+        NFT_Token contract = NFT_Token.deploy(web3j, credentials, gasProvider, "UCF NFT Marketplace", "SUCF").send();
+
+        return contract.getContractAddress();
     }
 
     public BigInteger getBalance(String address) throws Exception {
-//        SimpleNFT contract = SimpleNFT.load(
-//                "CONTRACT_ADDRESS", // Replace with actual deployed address
-//                web3j,
-//                credentials,
-//                gasProvider
-//        );
-//        return contract.balanceOf(address).send();
         return BigInteger.ZERO;
     }
 }

@@ -5,18 +5,22 @@ import com.skarmali.sk_nft_marketplace.model.Collection;
 import com.skarmali.sk_nft_marketplace.model.CollectionUrl;
 import com.skarmali.sk_nft_marketplace.repository.CollectionRepository;
 import com.skarmali.sk_nft_marketplace.repository.CollectionUrlRepository;
+import com.skarmali.sk_nft_marketplace.service.NFTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -32,6 +36,16 @@ public class NFTController {
 
     @Autowired
     private final CollectionUrlRepository collectionUrlRepository;
+
+    @Autowired
+    private NFTService nftService;
+
+
+    @Value("${ethereum.node.url}")
+    private String ethereumNodeUrl;
+
+    @Value("${ethereum.wallet.privateKey}")
+    private String privateKey;
 
     public NFTController(CollectionRepository collectionRepository, CollectionUrlRepository collectionUrlRepository) {
         this.collectionRepository = collectionRepository;
@@ -75,17 +89,12 @@ public class NFTController {
 
     @PostMapping("/deploy")
     public String deployNFTFromBytecode() throws Exception {
-        // Connect to Ethereum test network (replace with your provider)
-        Web3j web3j = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/UCF_Project"));
+        return nftService.deployContract();
+    }
 
-
-        // Load credentials (replace with your private key)
-        Credentials credentials = Credentials.create("bb2767e2d326ea2ebb1e1446c534e4263e1348f48ec431fc5d4445b5124f48ed");
-
-        // Deploy contract
-        ContractGasProvider gasProvider = new DefaultGasProvider();
-        NFT_Token contract = NFT_Token.deploy(web3j, credentials, gasProvider, "UCF NFT Marketplace", "SUCF").send();
-
-        return contract.getContractAddress();
+    @GetMapping("/balance/{address}")
+    public ResponseEntity<BigInteger> getBalance(@PathVariable String address) throws Exception {
+        BigInteger balance = nftService.getBalance(address);
+        return ResponseEntity.ok(balance);
     }
 }

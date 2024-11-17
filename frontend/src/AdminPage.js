@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './AdminPage.css';
 
 const AdminPage = () => {
     const [status, setStatus] = useState('');
@@ -14,7 +15,7 @@ const AdminPage = () => {
     };
 
     return (
-        <div>
+        <div className="admin-page">
             <h2>Admin Page</h2>
             <button onClick={deployContract}>Deploy Contract</button>
             <p>{status}</p>

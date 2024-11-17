@@ -1,24 +1,24 @@
+/* frontend/src/App.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f2f5;
+}
+
 .App {
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 20px;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.nft-listings-title {
-  color: #477bff; /* Example color: Tomato */
+  flex: 1;
 }
 
 nav {
@@ -26,11 +26,69 @@ nav {
 }
 
 nav a {
-  margin: 0 10px;
+  margin: 0 15px;
   color: #61dafb;
   text-decoration: none;
+  font-size: 1.2em;
 }
 
 nav a:hover {
   text-decoration: underline;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+button {
+  background-color: #61dafb;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}
+
+table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+.nft-listings-title {
+  font-size: 2em;
+  margin: 20px 0;
 }

@@ -1,6 +1,5 @@
 package com.skarmali.sk_nft_marketplace.controller;
 
-import com.skarmali.sk_nft_marketplace.contracts.NFT_Token;
 import com.skarmali.sk_nft_marketplace.model.Collection;
 import com.skarmali.sk_nft_marketplace.model.CollectionUrl;
 import com.skarmali.sk_nft_marketplace.repository.CollectionRepository;
@@ -8,18 +7,9 @@ import com.skarmali.sk_nft_marketplace.repository.CollectionUrlRepository;
 import com.skarmali.sk_nft_marketplace.service.NFTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.web3j.crypto.Credentials;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.gas.ContractGasProvider;
-import org.web3j.tx.gas.DefaultGasProvider;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;

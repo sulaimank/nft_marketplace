@@ -1,36 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import config from './config.json';
+
+
 
 const NFTListings = () => {
     const [nfts, setNfts] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 1;
 
-
     useEffect(() => {
-        // const collections = [
-        //     'https://api.opensea.io/api/v2/collections/cryptopunks',
-        //     'https://api.opensea.io/api/v2/collections/corpo-real-by-claire-silver',
-        //     'https://api.opensea.io/api/v2/collections/boredapeyachtclub',
-        //     // Add more URLs as needed
-        // ];
-
         const fetchCollections = async () => {
             try {
+                // Retrieve collections from OpenSea API using collections stored in mongoDB
                 const response = await axios.get('http://localhost:8080/nft_project/collections/urls');
                 const collections = response.data;
 
-
                 const responses = await Promise.all(collections.map(collection => axios.get(collection, {
                     params: {
-                        owner: '0x1a9fd0b0a651c20e8e61a25225d137fdec0d8e8d',
+                        owner: config.owner,
                         order_direction: 'desc',
                         offset: 0,
                         limit: 10
                     },
                     headers: {
                         'Accept': 'application/json',
-                        'X-API-KEY': 'caa201114f614af5a0c8f9d75baa0b49'
+                        'X-API-KEY': config.apiKey
                     }
                 })));
 

@@ -74,6 +74,16 @@ public class NFTController {
         }
     }
 
+    @PostMapping("/price/{id}")
+    public ResponseEntity<String> getPriceNFT(@PathVariable String id) {
+        try {
+            String transactionHash = String.valueOf(nftService.getPrice(id));
+            return ResponseEntity.ok(transactionHash);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/collections/name/{name}")
     public ResponseEntity<Collection> getCollectionByName(@PathVariable String name) {
         Optional<Collection> collection = collectionRepository.findByName(name);

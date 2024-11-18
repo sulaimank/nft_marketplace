@@ -91,7 +91,7 @@ const NFTListings = () => {
                     <th>Name</th>
                     <th>Description</th>
                     <th>NFT</th>
-                    <th>Action</th>
+                    <th style={{ width: '150px' }}>Action</th>
                 </tr>
                 </thead>
                 <tbody>

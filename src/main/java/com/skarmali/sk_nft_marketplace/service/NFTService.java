@@ -63,4 +63,11 @@ public class NFTService {
 
         return contract.sellNFT("nftContract", BigInteger.valueOf(1), BigInteger.valueOf(100)).send().getTransactionHash();
     }
+
+    public Integer getPrice(String id) throws Exception {
+        // Sell NFT
+        NFT_Token contract = NFT_Token.load("0x1234567890123456789012345678901234567890", web3j, credentials, gasProvider);
+
+        return contract.getListingPrice(BigInteger.valueOf(1)).send().intValue();
+    }
 }

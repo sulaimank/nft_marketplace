@@ -81,6 +81,15 @@ const NFTListings = () => {
         }
     };
 
+    const handleGetNFTPrice = async (nft) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/nft_project/price/${nft.id}`);
+            console.log(`NFT Price: ${nft.name}, Transaction Hash: ${response.data}`);
+        } catch (error) {
+            console.error('Error pricing NFT:', error);
+        }
+    };
+
 
     return (
         <div>
@@ -104,6 +113,7 @@ const NFTListings = () => {
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <button onClick={() => handlePurchase(collection)}>Purchase</button>
                                 <button onClick={() => handleSale(collection)}>Sell</button>
+                                <button onClick={() => handleGetNFTPrice(collection)}>Get Price</button>
                             </div>
                         </td>
                     </tr>

@@ -11,6 +11,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.exceptions.ContractCallException;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
@@ -25,11 +26,20 @@ public class NFTService {
     private final Web3j web3j;
     private final Credentials credentials;
     private final ContractGasProvider gasProvider;
-    public NFTService(@Value("${ethereum.node.testnet.url}") String nodeUrl,
-                      @Value("${ethereum.wallet.privateKey}") String privateKey) {
-        this.web3j = Web3j.build(new HttpService(nodeUrl));
+    private final String contractAddress;
+    private final String mainnetUrl;
+    private final String testnetUrl;
+
+    public NFTService(@Value("${ethereum.node.testnet.url}") String testnetUrl,
+                      @Value("${ethereum.node.mainnet.url}") String mainnetUrl,
+                      @Value("${ethereum.wallet.privateKey}") String privateKey,
+                      @Value("${ethereum.contract.address}") String contractAddress) {
+        this.web3j = Web3j.build(new HttpService(testnetUrl));
         this.credentials = Credentials.create(privateKey);
         this.gasProvider = new DefaultGasProvider();
+        this.contractAddress = contractAddress;
+        this.mainnetUrl = mainnetUrl;
+        this.testnetUrl = testnetUrl;
     }
 
 
@@ -57,22 +67,26 @@ public class NFTService {
 
     public String sellNFT(String id) throws Exception {
         // Sell NFT
-        NFT_Token contract = NFT_Token.load("0x1234567890123456789012345678901234567890", web3j, credentials, gasProvider);
+        NFT_Token contract = NFT_Token.load(contractAddress, web3j, credentials, gasProvider);
 
         return contract.sellNFT("nftContract", BigInteger.valueOf(1), BigInteger.valueOf(100)).send().getTransactionHash();
     }
 
     public String buyNFT(String id) throws Exception {
-        // Sell NFT
-        NFT_Token contract = NFT_Token.load("0x1234567890123456789012345678901234567890", web3j, credentials, gasProvider);
+        // Buy NFT
+        NFT_Token contract = NFT_Token.load(contractAddress, web3j, credentials, gasProvider);
 
         return contract.sellNFT("nftContract", BigInteger.valueOf(1), BigInteger.valueOf(100)).send().getTransactionHash();
     }
 
     public Integer getPrice(String id) throws Exception {
         // Sell NFT
-        NFT_Token contract = NFT_Token.load("0x1234567890123456789012345678901234567890", web3j, credentials, gasProvider);
-
-        return contract.getListingPrice(BigInteger.valueOf(1)).send().intValue();
+        try {
+            NFT_Token contract = NFT_Token.load(contractAddress, web3j, credentials, gasProvider);
+            return contract.getListingPrice(BigInteger.valueOf(1)).send().intValue();
+        } catch (ContractCallException e) {
+            logger.error("Error calling contract method getListingPrice for NFT id {}: {}", id, e.getMessage());
+            throw new RuntimeException("Error calling contract method getListingPrice: " + e.getMessage(), e);
+        }
     }
 }

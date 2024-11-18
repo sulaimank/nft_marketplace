@@ -74,7 +74,7 @@ public class NFTController {
         }
     }
 
-    @PostMapping("/price/{id}")
+    @GetMapping("/price/{id}")
     public ResponseEntity<String> getPriceNFT(@PathVariable String id) {
         try {
             String transactionHash = String.valueOf(nftService.getPrice(id));
